@@ -1,0 +1,19 @@
+name: tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    services:
+      clickhouse:
+        image: clickhouse/clickhouse-server:26.8
+        env: {CLICKHOUSE_USER: apptag, CLICKHOUSE_PASSWORD: apptag, CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"}
+        ports: ["8123:8123"]
+        options: >-
+          --health-cmd "wget -qO- http://127.0.0.1:8123/ping | grep -q Ok" --health-interval 5s --health-timeout 5s --health-retries 20
+    env: {CH_HOST: localhost, CH_PORT: "8123", CH_USER: apptag, CH_PASSWORD: apptag}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: {python-version: "3.12"}
+      - run: pip install -e ".[dev]"
+      - run: pytest -q          # unit + integrasi (Kafka mock cluster librdkafka + ClickHouse service)

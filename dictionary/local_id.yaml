@@ -1,0 +1,21 @@
+# Tambahan untuk aplikasi populer di Indonesia yang tidak ada di v2fly/domain-list-community.
+# Hanya domain merek utama yang jelas milik layanannya; domain CDN/API tidak dimasukkan tanpa verifikasi.
+# Domain di sini dicocokkan beserta subdomainnya (seperti baris biasa di format v2fly).
+source: "local supplement (maintained in this repo)"
+apps:
+  tokopedia:   {category: ecommerce, domains: [tokopedia.com]}
+  bukalapak:   {category: ecommerce, domains: [bukalapak.com]}
+  lazada:      {category: ecommerce, domains: [lazada.co.id]}
+  blibli:      {category: ecommerce, domains: [blibli.com]}
+  gojek:       {category: transport_delivery, domains: [gojek.com]}
+  grab:        {category: transport_delivery, domains: [grab.com]}
+  traveloka:   {category: travel, domains: [traveloka.com]}
+  vidio:       {category: video, domains: [vidio.com]}
+  dana:        {category: finance, domains: [dana.id]}
+  ovo:         {category: finance, domains: [ovo.id]}
+  bca:         {category: finance, domains: [bca.co.id, klikbca.com]}
+  mandiri:     {category: finance, domains: [bankmandiri.co.id]}
+  bri:         {category: finance, domains: [bri.co.id]}
+  mobilelegends: {category: games, domains: [mobilelegends.com]}
+  detik:       {category: news, domains: [detik.com]}
+  kompas:      {category: news, domains: [kompas.com]}

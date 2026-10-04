@@ -1,0 +1,26 @@
+# Daftar v2fly yang dipakai sebagai aplikasi, beserta kategorinya. Daftar v2fly lain diabaikan (termasuk daftar gabungan category-*).
+categories: [video, social, messaging, music, games, ecommerce, transport_delivery, travel, finance, cloud_productivity, ai, news]
+v2fly:
+  youtube: video
+  netflix: video
+  disney: video
+  primevideo: video
+  tiktok: social
+  facebook: social
+  instagram: social
+  twitter: social
+  whatsapp: messaging
+  telegram: messaging
+  line: messaging
+  spotify: music
+  garena: games
+  pubg: games
+  roblox: games
+  steam: games
+  shopee: ecommerce
+  amazon: ecommerce
+  google: cloud_productivity
+  microsoft: cloud_productivity
+  apple: cloud_productivity
+  zoom: cloud_productivity
+  openai: ai
