@@ -1,4 +1,4 @@
--- Query contoh (jalankan di http://localhost:8123/play, user apptag / apptag)
+-- Query contoh (jalankan di http://localhost:8124/play, user apptag / apptag)
 
 -- Trafik per kategori, 15 menit terakhir
 SELECT category, sum(events) AS n_events, formatReadableSize(sum(bytes)) AS volume

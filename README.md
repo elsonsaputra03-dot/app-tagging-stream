@@ -79,7 +79,9 @@ docker compose --profile ui up -d         # optional Kafka UI at http://localhos
 docker compose up -d --scale consumer=3   # one consumer per partition
 ```
 
-Then open the ClickHouse console at http://localhost:8123/play (user `apptag`, password `apptag`) and run the queries in
+ClickHouse is published on host port 8124 (8123 is often taken by another local ClickHouse); change it with `CH_HTTP_PORT=...`.
+
+Then open the ClickHouse console at http://localhost:8124/play (user `apptag`, password `apptag`) and run the queries in
 [`sql/queries.sql`](sql/queries.sql): traffic per category, share per tagging method, the review queue, live precision and recall,
 dictionary versions, and SQL lookups through the ClickHouse DICTIONARY. The dictionary is re-synced every 6 hours; the consumer picks
 up a new version within 30 seconds without a restart.

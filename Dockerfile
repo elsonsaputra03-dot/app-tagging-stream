@@ -5,4 +5,5 @@ COPY pyproject.toml README.md ./
 COPY apptag ./apptag
 COPY dictionary ./dictionary
 RUN pip install --no-cache-dir .
+ENV APPTAG_DICT_DIR=/app/dictionary
 ENTRYPOINT ["apptag"]

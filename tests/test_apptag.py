@@ -88,3 +88,14 @@ def test_evaluation_on_labelled_events(d, m):
     assert k["variant_hard"].get("correct", 0) < 0.2 * k["variant_hard"]["n"]     # batasan yang disengaja & terdokumentasi
     r0 = E.evaluate(M.Matcher(d, fuzzy=False), G.events(d, 20_000, seed=3))
     assert r["recall"] > r0["recall"] + 0.03                                 # fuzzy menaikkan recall
+
+
+def test_dictionary_folder_found_outside_the_repo(tmp_path, monkeypatch):
+    """Seperti di container: kode terpasang di tempat lain dan proses berjalan dari folder lain."""
+    from apptag import cli
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("APPTAG_DICT_DIR", str(ROOT / "dictionary"))
+    assert cli.dict_dir() == ROOT / "dictionary"
+    monkeypatch.setenv("APPTAG_DICT_DIR", str(tmp_path / "nowhere"))
+    (tmp_path / "dictionary").mkdir(); (tmp_path / "dictionary/taxonomy.yaml").write_text("v2fly: {}\n")
+    assert cli.dict_dir() == tmp_path / "dictionary"                    # ./dictionary dipakai bila env tidak valid
