@@ -1,0 +1,484 @@
+{
+ "generated_at": "2026-10-05T15:16:42+00:00",
+ "window_minutes": 30,
+ "note": "Snapshot of a local docker compose run. Events are synthetic; no subscriber data.",
+ "kafka": {
+  "topic": "dns_events",
+  "group": "apptag-tagger",
+  "brokers": 1,
+  "partitions": [
+   {
+    "partition": 0,
+    "low": 0,
+    "high": 152111,
+    "committed": 152006,
+    "lag": 105
+   },
+   {
+    "partition": 1,
+    "low": 0,
+    "high": 150570,
+    "committed": 150473,
+    "lag": 97
+   },
+   {
+    "partition": 2,
+    "low": 0,
+    "high": 151752,
+    "committed": 151647,
+    "lag": 105
+   }
+  ],
+  "messages": 454433,
+  "lag": 307
+ },
+ "clickhouse": {
+  "version": "26.8.17.4",
+  "events": {
+   "total": 454126,
+   "unique": 454126,
+   "duplicates": 0,
+   "first": "2026-10-05 14:50:42.628000",
+   "last": "2026-10-05 15:16:41.897000"
+  },
+  "per_minute": [
+   {
+    "minute": "2026-10-05 14:50:00",
+    "events": 5213,
+    "bytes": 417663029
+   },
+   {
+    "minute": "2026-10-05 14:51:00",
+    "events": 17442,
+    "bytes": 1331989439
+   },
+   {
+    "minute": "2026-10-05 14:52:00",
+    "events": 17402,
+    "bytes": 1321626069
+   },
+   {
+    "minute": "2026-10-05 14:53:00",
+    "events": 17390,
+    "bytes": 1363604234
+   },
+   {
+    "minute": "2026-10-05 14:54:00",
+    "events": 17389,
+    "bytes": 1352730081
+   },
+   {
+    "minute": "2026-10-05 14:55:00",
+    "events": 17691,
+    "bytes": 1420911344
+   },
+   {
+    "minute": "2026-10-05 14:56:00",
+    "events": 17399,
+    "bytes": 1380056640
+   },
+   {
+    "minute": "2026-10-05 14:57:00",
+    "events": 17391,
+    "bytes": 1385971374
+   },
+   {
+    "minute": "2026-10-05 14:58:00",
+    "events": 17520,
+    "bytes": 1414068275
+   },
+   {
+    "minute": "2026-10-05 14:59:00",
+    "events": 17471,
+    "bytes": 1439220220
+   },
+   {
+    "minute": "2026-10-05 15:00:00",
+    "events": 17733,
+    "bytes": 1433452630
+   },
+   {
+    "minute": "2026-10-05 15:01:00",
+    "events": 17465,
+    "bytes": 1388560865
+   },
+   {
+    "minute": "2026-10-05 15:02:00",
+    "events": 17462,
+    "bytes": 1472149902
+   },
+   {
+    "minute": "2026-10-05 15:03:00",
+    "events": 17460,
+    "bytes": 1285773507
+   },
+   {
+    "minute": "2026-10-05 15:04:00",
+    "events": 17475,
+    "bytes": 1345752449
+   },
+   {
+    "minute": "2026-10-05 15:05:00",
+    "events": 17485,
+    "bytes": 1446178880
+   },
+   {
+    "minute": "2026-10-05 15:06:00",
+    "events": 17656,
+    "bytes": 1448542878
+   },
+   {
+    "minute": "2026-10-05 15:07:00",
+    "events": 17440,
+    "bytes": 1381653604
+   },
+   {
+    "minute": "2026-10-05 15:08:00",
+    "events": 17439,
+    "bytes": 1380925048
+   },
+   {
+    "minute": "2026-10-05 15:09:00",
+    "events": 17414,
+    "bytes": 1402807163
+   },
+   {
+    "minute": "2026-10-05 15:10:00",
+    "events": 17396,
+    "bytes": 1300979512
+   },
+   {
+    "minute": "2026-10-05 15:11:00",
+    "events": 17722,
+    "bytes": 1347603933
+   },
+   {
+    "minute": "2026-10-05 15:12:00",
+    "events": 17355,
+    "bytes": 1368058309
+   },
+   {
+    "minute": "2026-10-05 15:13:00",
+    "events": 17344,
+    "bytes": 1415437470
+   },
+   {
+    "minute": "2026-10-05 15:14:00",
+    "events": 17348,
+    "bytes": 1414050728
+   },
+   {
+    "minute": "2026-10-05 15:15:00",
+    "events": 17354,
+    "bytes": 1352018911
+   },
+   {
+    "minute": "2026-10-05 15:16:00",
+    "events": 12583,
+    "bytes": 941628126
+   }
+  ],
+  "latency_ms": {
+   "p50": 540.0,
+   "p95": 1014.0,
+   "p99": 1708.5400000000009
+  },
+  "accuracy": {
+   "precision": 1.0,
+   "recall": 0.9657
+  },
+  "methods": [
+   {
+    "method": "suffix",
+    "events": 328536
+   },
+   {
+    "method": "unknown",
+    "events": 76633
+   },
+   {
+    "method": "fuzzy",
+    "events": 23091
+   },
+   {
+    "method": "exact",
+    "events": 17218
+   },
+   {
+    "method": "lookalike",
+    "events": 8961
+   }
+  ],
+  "categories": [
+   {
+    "category": "ecommerce",
+    "events": 97867,
+    "bytes": 7732970880
+   },
+   {
+    "category": "cloud_productivity",
+    "events": 60731,
+    "bytes": 4742675362
+   },
+   {
+    "category": "social",
+    "events": 54813,
+    "bytes": 4301907405
+   },
+   {
+    "category": "video",
+    "events": 36659,
+    "bytes": 2929182183
+   },
+   {
+    "category": "games",
+    "events": 27949,
+    "bytes": 2241024624
+   },
+   {
+    "category": "news",
+    "events": 21506,
+    "bytes": 1718092332
+   },
+   {
+    "category": "messaging",
+    "events": 21366,
+    "bytes": 1650047126
+   },
+   {
+    "category": "finance",
+    "events": 18291,
+    "bytes": 1554615364
+   },
+   {
+    "category": "transport_delivery",
+    "events": 13045,
+    "bytes": 1047358275
+   },
+   {
+    "category": "music",
+    "events": 7269,
+    "bytes": 604882000
+   },
+   {
+    "category": "ai",
+    "events": 5734,
+    "bytes": 429899965
+   },
+   {
+    "category": "travel",
+    "events": 3615,
+    "bytes": 279529031
+   }
+  ],
+  "top_apps": [
+   {
+    "app": "bukalapak",
+    "category": "ecommerce",
+    "events": 73767,
+    "bytes": 5885186044
+   },
+   {
+    "app": "twitter",
+    "category": "social",
+    "events": 39534,
+    "bytes": 3119742837
+   },
+   {
+    "app": "google",
+    "category": "cloud_productivity",
+    "events": 27886,
+    "bytes": 2216879059
+   },
+   {
+    "app": "microsoft",
+    "category": "cloud_productivity",
+    "events": 21071,
+    "bytes": 1602676837
+   },
+   {
+    "app": "kompas",
+    "category": "news",
+    "events": 16990,
+    "bytes": 1374264836
+   },
+   {
+    "app": "garena",
+    "category": "games",
+    "events": 14833,
+    "bytes": 1166433645
+   },
+   {
+    "app": "telegram",
+    "category": "messaging",
+    "events": 12783,
+    "bytes": 970473213
+   },
+   {
+    "app": "netflix",
+    "category": "video",
+    "events": 11315,
+    "bytes": 916230170
+   },
+   {
+    "app": "disney",
+    "category": "video",
+    "events": 10406,
+    "bytes": 817236642
+   },
+   {
+    "app": "gojek",
+    "category": "transport_delivery",
+    "events": 9390,
+    "bytes": 754105360
+   },
+   {
+    "app": "zoom",
+    "category": "cloud_productivity",
+    "events": 8062,
+    "bytes": 620950846
+   },
+   {
+    "app": "spotify",
+    "category": "music",
+    "events": 7269,
+    "bytes": 604882000
+   }
+  ],
+  "review_queue": [
+   {
+    "method": "unknown",
+    "host": "m.kompasgo.net",
+    "hits": 16,
+    "bytes": 20980299,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "cdn.jayaberita.net",
+    "hits": 6,
+    "bytes": 12830113,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "rumahappletree.id",
+    "hits": 6,
+    "bytes": 11098900,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "danamonkopi.co.id",
+    "hits": 10,
+    "bytes": 10540057,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "twitternow.com",
+    "hits": 31,
+    "bytes": 10453820,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "www.spotify-wiki.com",
+    "hits": 9,
+    "bytes": 9577488,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "cdn.keretaspotlight.net",
+    "hits": 7,
+    "bytes": 9403387,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "bukalapak-fans.id",
+    "hits": 43,
+    "bytes": 9363460,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "cdn.tanahjaya.id",
+    "hits": 10,
+    "bytes": 9253436,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "pasarappletree.com",
+    "hits": 10,
+    "bytes": 9142625,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "bukalapak-tricks.id",
+    "hits": 57,
+    "bytes": 9023665,
+    "hint": ""
+   },
+   {
+    "method": "unknown",
+    "host": "langitrumah.id",
+    "hits": 12,
+    "bytes": 8806050,
+    "hint": ""
+   }
+  ],
+  "review_queue_hosts": 16665,
+  "dictionary": [
+   {
+    "built_at": "2026-10-05 14:50:37.861000",
+    "version": "69c8fb5c29bc",
+    "upstream": "v2fly/domain-list-community@63777333b7dd",
+    "rules": 5015,
+    "added": 5015,
+    "removed": 0,
+    "moved": 0
+   }
+  ],
+  "storage": [
+   {
+    "table": "tagged_events",
+    "rows": 454439,
+    "compressed": 34237806,
+    "uncompressed": 71301078,
+    "parts": 5
+   },
+   {
+    "table": "review_queue",
+    "rows": 16665,
+    "compressed": 395483,
+    "uncompressed": 1191030,
+    "parts": 1
+   },
+   {
+    "table": "dict_rules",
+    "rows": 5015,
+    "compressed": 55799,
+    "uncompressed": 244315,
+    "parts": 1
+   },
+   {
+    "table": "dict_versions",
+    "rows": 1,
+    "compressed": 43349,
+    "uncompressed": 137331,
+    "parts": 1
+   },
+   {
+    "table": "traffic_minute",
+    "rows": 2374,
+    "compressed": 21315,
+    "uncompressed": 55130,
+    "parts": 1
+   }
+  ]
+ }
+}

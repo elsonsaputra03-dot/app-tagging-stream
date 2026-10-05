@@ -8,7 +8,7 @@ import os
 import sys
 from pathlib import Path
 
-from . import dictionary as D, evaluate as E, generate as G, match as M, store, stream, sync
+from . import dictionary as D, evaluate as E, generate as G, match as M, snapshot, store, stream, sync
 
 def dict_dir() -> Path:
     """Folder kamus (taxonomy.yaml, local_id.yaml): APPTAG_DICT_DIR, lalu ./dictionary, lalu folder repo.
@@ -34,6 +34,8 @@ def main(argv=None) -> int:
     p.add_argument("--n", type=int, default=100_000); p.add_argument("--rate", type=float, default=2000)
     c = sub.add_parser("consume", help="tag events from Kafka into ClickHouse")
     c.add_argument("--max", type=int); c.add_argument("--idle-stop", type=float); c.add_argument("--reload-every", type=float, default=30)
+    sn = sub.add_parser("snapshot", help="export Kafka and ClickHouse metrics of the running stack to JSON (for the portfolio page)")
+    sn.add_argument("--out", default="published/snapshot.json"); sn.add_argument("--window", type=int, default=30, help="minutes")
     a = ap.parse_args(argv)
     a.taxonomy = a.taxonomy or dict_dir() / "taxonomy.yaml"
     a.local = a.local or dict_dir() / "local_id.yaml"
@@ -51,6 +53,11 @@ def main(argv=None) -> int:
             if not a.every:
                 return 0
             import time; time.sleep(a.every)
+    if a.cmd == "snapshot":
+        doc = snapshot.build(bootstrap, store.connect(cfg), a.window)
+        snapshot.write(doc, a.out)
+        k, ch = doc["kafka"], doc["clickhouse"]
+        print(f"snapshot -> {a.out}: {ch['events']['total']:,} events, lag {k['lag']}, p95 latency {ch['latency_ms']['p95']} ms"); return 0
     if a.cmd == "consume":
         print(json.dumps(stream.consume(bootstrap, store.connect(cfg), max_events=a.max, idle_stop=a.idle_stop, reload_every=a.reload_every))); return 0
     d = D.build(a.v2fly, a.taxonomy, a.local) if a.v2fly else store.load_dictionary(store.connect(cfg), store.latest_version(store.connect(cfg)))

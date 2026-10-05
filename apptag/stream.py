@@ -11,7 +11,7 @@ import json
 import logging
 import time
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 from confluent_kafka import Consumer, KafkaError, Producer
 
@@ -28,6 +28,9 @@ def produce(bootstrap: str, d: Dictionary, total: int, rate: float = 0.0, seed: 
     p = Producer({"bootstrap.servers": bootstrap, "linger.ms": 20, "enable.idempotence": True, **(extra or {})})
     sent, t0 = 0, time.monotonic()
     for e in generate.events(d, total, seed=seed, start=datetime.now().astimezone()):
+        # waktu event = saat dikirim. Versi awal memakai jarak tetap 37 ms dari generator, sehingga pada 300 event/detik
+        # waktu event berjalan 11x lebih cepat dari jam dinding dan agregat per menit jatuh ke menit "masa depan".
+        e["ts"] = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
         e["event_id"] = uuid.uuid4().hex
         p.produce(topic, key=e["subscriber"], value=json.dumps(e).encode())
         sent += 1

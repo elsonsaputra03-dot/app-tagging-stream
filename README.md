@@ -49,6 +49,10 @@ Exact and subdomain hosts are all tagged correctly; every lookalike is flagged; 
 of held-out variants such as `netflixtv.com` are recognised, and the rest wait in the review queue. The streaming path reproduces the
 offline numbers exactly when measured from ClickHouse (see `sql/queries.sql`).
 
+**On the running stack** (`docker compose up`, Apache Kafka 4.1.2 and ClickHouse 26.8, dictionary from upstream commit
+`63777333b7dd`): 82,200 events tagged with 0 duplicate rows, precision 1.0 and recall 96.57% measured in ClickHouse, the same as
+the offline evaluation; consumer lag stayed between 80 and 106 messages per partition at 300 events per second.
+
 These numbers measure the rules on generated data, not accuracy on real traffic. The evaluation includes host patterns that were not
 used to design the rules, because the first version scored 100%/100% only by being tested against its own patterns.
 
@@ -64,6 +68,8 @@ used to design the rules, because the first version scored 100%/100% only by bei
 | Committing an empty batch fails with `_NO_OFFSET` (librdkafka mock cluster) | Commit only after a processed batch |
 | Consumer stopped before the group rebalance finished and read nothing | Idle time counted from partition assignment |
 | An example query failed in ClickHouse: an alias shadowed the column it aggregated | Aliases renamed; every query in `sql/queries.sql` runs in the test environment |
+| Event time ran 11 times faster than the wall clock: the generator spaced events 37 ms apart while the producer sent 300 per second, so per-minute aggregates landed in future minutes | The producer stamps each event with its send time; a test checks that event times stay inside the sending window |
+| In Docker the installed package could not find `dictionary/`: tests always ran from the repository folder | Dictionary folder resolved from `APPTAG_DICT_DIR`, the working directory, then the repository; test runs from elsewhere |
 
 ## Delivery semantics
 
@@ -75,7 +81,7 @@ are measurable (`count() - uniqExact(event_id)`). Events are keyed by subscriber
 
 ```bash
 docker compose up -d --build              # Kafka, ClickHouse, dictionary sync, producer (300 events/s), consumer
-docker compose --profile ui up -d         # optional Kafka UI at http://localhost:8085
+docker compose --profile ui up -d         # optional Kafka UI at http://localhost:8080
 docker compose up -d --scale consumer=3   # one consumer per partition
 ```
 
@@ -88,9 +94,20 @@ up a new version within 30 seconds without a restart.
 
 Without Docker: `pip install -e ".[dev]"`, then `apptag --v2fly <path-to-v2fly>/data eval`.
 
+### Snapshot for a static page
+
+The stack runs locally, so a page on GitHub Pages cannot query it. `apptag snapshot` exports Kafka partitions, offsets and lag
+together with ClickHouse throughput, send-to-stored latency, traffic by app, the review queue, dictionary versions and table
+compression into `published/snapshot.json`, which the
+[portfolio page](https://elsonsaputra03-dot.github.io/indo-realtime-monitor/app-tagging.html) reads:
+
+```bash
+docker compose run --rm -v "$PWD/published:/app/published" consumer snapshot --window 30
+```
+
 ## Tests
 
-`pytest` runs 22 tests: unit tests on a small MIT-licensed v2fly fixture, and integration tests that send events through a Kafka
+`pytest` runs 24 tests: unit tests on a small MIT-licensed v2fly fixture, and integration tests that send events through a Kafka
 mock cluster (librdkafka's in-process brokers) into a real ClickHouse server: completeness and materialized-view totals, hot dictionary
 reload, review queue contents, and no event loss when a ClickHouse insert fails mid-stream. CI runs them against a ClickHouse service
 container.

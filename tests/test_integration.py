@@ -102,3 +102,18 @@ def test_at_least_once_no_loss_when_clickhouse_insert_fails(env, monkeypatch):
     total, uniq = _q(c, "SELECT count(), uniqExact(event_id) FROM tagged_events")[0]
     assert uniq == 3000                                                       # tidak ada event yang hilang
     assert total >= uniq                                                      # duplikat mungkin (at-least-once) dan terdeteksi lewat event_id
+
+
+def test_event_time_follows_the_wall_clock(env):
+    """Regresi: waktu event dulu berjalan 11x lebih cepat dari jam dinding pada 300 event/detik."""
+    import time
+    from datetime import datetime, timezone
+    c, cfg = env["client"], env["cfg"]
+    v = sync.run(cfg, TAX, LOCAL, HERE / "fixtures/v2fly/data", "fixture")["version"]
+    t0 = datetime.now(timezone.utc)
+    stream.produce(env["bootstrap"], store.load_dictionary(c, v), 600, rate=300)
+    t1 = datetime.now(timezone.utc)
+    stream.consume(env["bootstrap"], c, idle_stop=3)
+    lo, hi, lag_p95 = _q(c, "SELECT min(ts), max(ts), quantile(0.95)(dateDiff('millisecond', ts, ingested_at)) FROM tagged_events")[0]
+    assert t0.replace(tzinfo=None) <= lo.replace(tzinfo=None) and hi.replace(tzinfo=None) <= t1.replace(tzinfo=None)   # dalam jendela kirim
+    assert lag_p95 >= 0                                                       # tidak ada event "dari masa depan"
