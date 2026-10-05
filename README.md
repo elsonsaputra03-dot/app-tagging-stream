@@ -75,7 +75,7 @@ are measurable (`count() - uniqExact(event_id)`). Events are keyed by subscriber
 
 ```bash
 docker compose up -d --build              # Kafka, ClickHouse, dictionary sync, producer (300 events/s), consumer
-docker compose --profile ui up -d         # optional Kafka UI at http://localhost:8080
+docker compose --profile ui up -d         # optional Kafka UI at http://localhost:8085
 docker compose up -d --scale consumer=3   # one consumer per partition
 ```
 

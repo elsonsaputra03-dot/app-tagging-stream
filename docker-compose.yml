@@ -1,5 +1,5 @@
 # docker compose up -d --build        -> Kafka, ClickHouse, sinkronisasi kamus, producer, consumer
-# docker compose --profile ui up -d   -> ditambah Kafka UI di http://localhost:8080
+# docker compose --profile ui up -d   -> ditambah Kafka UI di http://localhost:8085
 x-app-env: &app-env
   KAFKA_BOOTSTRAP: kafka:9092
   CH_HOST: clickhouse
@@ -82,7 +82,7 @@ services:
   kafka-ui:
     image: ghcr.io/kafbat/kafka-ui:latest
     profiles: ["ui"]
-    ports: ["127.0.0.1:8080:8080"]
+    ports: ["127.0.0.1:${KAFKA_UI_PORT:-8085}:8080"]   # 8080 sering sudah dipakai UI lain
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
